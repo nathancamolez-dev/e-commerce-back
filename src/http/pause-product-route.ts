@@ -9,6 +9,7 @@ export const pauseProductRoute: FastifyPluginAsyncZod = async app => {
       schema: {
         params: z.object({ id: z.string() }),
       },
+      preHandler: app.authenticate,
     },
     async (req, res) => {
       const id = req.params
