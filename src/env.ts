@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 const schemaEnv = z.object({
+  APP_URL: z.string().url(),
   JWT_SECRET_KEY: z.string(),
   DATABASE_URL: z.string().url(),
   SUPABASE_URL: z.string().url(),
