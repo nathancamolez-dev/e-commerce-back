@@ -18,6 +18,10 @@ export async function createProductService({
   options,
 }: ProductInput) {
   try {
+    if (title === '' || !price || description === '' || !options.length) {
+      throw new Error('error on creating product')
+    }
+
     const { id } = await prisma.product.create({
       data: {
         title,

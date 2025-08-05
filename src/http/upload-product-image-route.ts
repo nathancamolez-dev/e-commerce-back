@@ -1,5 +1,6 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { prisma } from '../lib/prisma'
+import { updateImageService } from '../services/update-image-service'
 import { uploadImage } from '../services/upload-image'
 
 export const uploadProductImageRoute: FastifyPluginAsyncZod = async app => {
@@ -32,11 +33,7 @@ export const uploadProductImageRoute: FastifyPluginAsyncZod = async app => {
       if (!imageUrl) {
         return reply.status(500).send({ error: 'Upload failed' })
       }
-
-      await prisma.product.update({
-        where: { id },
-        data: { image_url: imageUrl },
-      })
+      await updateImageService({ id, imageUrl })
 
       return reply.status(200).send({ message: 'Image uploaded', imageUrl })
     }
