@@ -5,5 +5,11 @@ interface DeleteProductServiceProps {
 }
 
 export async function deleteProductService({ id }: DeleteProductServiceProps) {
-  await prisma.product.delete({ where: { id } })
+  try {
+    await prisma.product.delete({ where: { id } })
+
+    return 'Sucess'
+  } catch (err) {
+    throw new Error('Failed to delete the product')
+  }
 }
