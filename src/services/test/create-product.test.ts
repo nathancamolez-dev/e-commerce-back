@@ -1,6 +1,6 @@
+import { randomUUID } from 'node:crypto'
 import { z } from 'zod/v4'
 import { createProductService } from '../create-product-service'
-import { randomUUID } from 'node:crypto'
 
 const productOutput = z.object({
   id: z.uuid(),
