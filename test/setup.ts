@@ -13,5 +13,6 @@ afterAll(async () => {
 })
 
 async function cleanDatabase() {
+  await prisma.productOptions.deleteMany()
   await prisma.product.deleteMany()
 }

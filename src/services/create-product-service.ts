@@ -17,31 +17,27 @@ export async function createProductService({
   image,
   options,
 }: ProductInput) {
-  try {
-    if (title === '' || !price || description === '' || !options.length) {
-      throw new Error('error on creating product')
-    }
-
-    const { id } = await prisma.product.create({
-      data: {
-        title,
-        slug: title.toLowerCase().split(' ').join('-'),
-        price,
-        description,
-        featured,
-        image_url: image,
-      },
-    })
-
-    await prisma.productOptions.createMany({
-      data: options.map(option => ({
-        product_id: id,
-        option,
-      })),
-    })
-
-    return { id }
-  } catch (error) {
+  if (title === '' || !price || description === '' || !options.length) {
     throw new Error('error on creating product')
   }
+
+  const { id } = await prisma.product.create({
+    data: {
+      title,
+      slug: title.toLowerCase().split(' ').join('-'),
+      price,
+      description,
+      featured,
+      image_url: image,
+    },
+  })
+
+  await prisma.productOptions.createMany({
+    data: options.map(option => ({
+      product_id: id,
+      option,
+    })),
+  })
+
+  return { id }
 }

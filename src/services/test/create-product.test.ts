@@ -1,17 +1,16 @@
 import { z } from 'zod/v4'
 import { createProductService } from '../create-product-service'
+import { randomUUID } from 'node:crypto'
 
 const productOutput = z.object({
   id: z.uuid(),
 })
 
 describe('Create product', async () => {
-  beforeAll(async () => {})
-  afterAll(async () => {})
   it('should create a product', async () => {
     const result = productOutput.safeParse(
       await createProductService({
-        title: 'test1',
+        title: randomUUID(),
         price: 100,
         description: 'test',
         featured: false,

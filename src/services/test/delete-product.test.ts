@@ -1,8 +1,10 @@
 import { createProductService } from '../create-product-service'
 import { deleteProductService } from '../delete-product-service'
 
+let productId: string
+
 describe('Delete product', async () => {
-  it('should delete a product', async () => {
+  beforeEach(async () => {
     const { id } = await createProductService({
       title: 'test1',
       price: 100,
@@ -11,20 +13,14 @@ describe('Delete product', async () => {
       image: 'stringtest',
       options: ['test1', 'test2'],
     })
+    productId = id
+  })
 
-    expect(await deleteProductService({ id })).toBe('Sucess')
+  it('should delete a product', async () => {
+    expect(await deleteProductService({ id: productId })).toBe('Sucess')
   })
 
   it('should failed to delete a product', async () => {
-    const { id } = await createProductService({
-      title: 'test1',
-      price: 100,
-      description: 'test',
-      featured: false,
-      image: 'stringtest',
-      options: ['test1', 'test2'],
-    })
-
-    await expect(deleteProductService({ id: id + 1 })).rejects.toThrowError()
+    await expect(deleteProductService({ id: 'wrongId' })).rejects.toThrowError()
   })
 })
