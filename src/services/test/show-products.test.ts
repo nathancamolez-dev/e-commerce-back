@@ -1,7 +1,7 @@
 import { createProductService } from '../create-product-service'
-import { showFeaturedProductService } from '../show-featured-product-service'
+import { showAllProductsService } from '../show-all-products-service'
 
-describe('Show all featured products', () => {
+describe('Show all products', () => {
   beforeEach(async () => {
     await createProductService({
       title: 'test 1',
@@ -31,8 +31,8 @@ describe('Show all featured products', () => {
     })
   })
 
-  it('should show all featured products', async () => {
-    const products = await showFeaturedProductService()
+  it('should show all products', async () => {
+    const products = await showAllProductsService()
     expect(products).toEqual(
       expect.objectContaining({
         products: expect.arrayContaining([
@@ -42,17 +42,6 @@ describe('Show all featured products', () => {
           expect.objectContaining({
             title: 'test 2',
           }),
-        ]),
-      })
-    )
-  })
-
-  it('should not show the test 3 product', async () => {
-    const products = await showFeaturedProductService()
-
-    expect(products).toEqual(
-      expect.not.objectContaining({
-        products: expect.arrayContaining([
           expect.objectContaining({
             title: 'test 3',
           }),
